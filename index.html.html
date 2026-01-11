@@ -1,0 +1,89 @@
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Точка выбора</title>
+<style>
+body{font-family:system-ui, -apple-system, Segoe UI, Roboto, Arial; background:#0f0f12; color:#eaeaf0; margin:0}
+.container{max-width:720px; margin:0 auto; padding:24px}
+.card{background:#15151b; border-radius:16px; padding:20px; margin-bottom:16px}
+h1,h2{font-weight:600}
+button{width:100%; padding:14px 16px; border-radius:12px; border:0; background:#2b2bff; color:white; font-size:16px}
+.secondary{background:#2a2a33}
+.hidden{display:none}
+textarea{width:100%; min-height:120px; border-radius:12px; border:1px solid #2a2a33; background:#0f0f12; color:#eaeaf0; padding:12px; margin:8px 0}
+small{color:#9a9ab0}
+</style>
+</head>
+<body>
+<div class="container">
+  <div id="screen1" class="card">
+    <h1>Точка выбора</h1>
+    <p>Метод выявления жизненного сценария, который вы повторяете, и точки, где он создаётся.</p>
+    <p>Здесь не дают советов. Не поддерживают. Не мотивируют.</p>
+    <p>Здесь показывают, где именно вы уже выбираете то, что с вами происходит.</p>
+    <p><b>Результат:</b> вы начинаете видеть повторяющиеся сценарии и перестаёте воспринимать происходящее как случайность.</p>
+    <p><b>Кому подойдёт:</b> тем, кто готов смотреть на себя без иллюзий.</p>
+    <p><b>Кому не подойдёт:</b> тем, кто ищет «чудесную таблетку».</p>
+    <button onclick="go(2)">Начать</button>
+  </div>
+
+  <div id="screen2" class="card hidden">
+    <h2>Оплата</h2>
+    <p>Формат: письменная диагностика, индивидуальный разбор, 7-дневный цикл. Асинхронно.</p>
+    <p><b>Стоимость:</b><br>20 000 RUB<br>250 USD<br>9 000 UAH</p>
+    <p>Оплата переводом на карту. После оплаты нажмите кнопку ниже.</p>
+    <button onclick="go(3)">Я оплатил</button>
+    <button class="secondary" onclick="go(1)">Назад</button>
+  </div>
+
+  <div id="screen3" class="card hidden">
+    <h2>Диагностика</h2>
+    <small>Ответьте письменно и честно.</small>
+    <div id="q"></div>
+    <textarea id="a" placeholder="Ваш ответ..."></textarea>
+    <button onclick="next()">Далее</button>
+  </div>
+
+  <div id="screen4" class="card hidden">
+    <h2>Завершение</h2>
+    <p>Ваши ответы приняты. Процесс запущен.</p>
+    <p>В течение установленного срока вы получите персональный разбор и 7-дневный цикл работы.</p>
+  </div>
+</div>
+
+<script>
+const questions = [
+"Опишите ситуацию в вашей жизни, которая повторяется снова и снова.",
+"В какой момент вы понимаете, что это опять то же самое?",
+"Какие чувства эта ситуация вызывает чаще всего?",
+"Как вы обычно реагируете в таких моментах?",
+"Что вы ожидаете внутри этой ситуации?",
+"Что вы откладываете «на потом» в этой точке?",
+"Чего вы избегаете, выбирая привычный способ?",
+"В чём выгода сохранения сценария?",
+"Что эта ситуация хочет вам показать?",
+"Какой иной выбор возможен, но кажется опасным?",
+"Кем придётся перестать быть, если выбрать иначе?",
+"Что вы готовы увидеть в себе?"
+];
+let i=0, answers=[];
+function go(n){
+  for(let s=1;s<=4;s++) document.getElementById('screen'+s).classList.add('hidden');
+  document.getElementById('screen'+n).classList.remove('hidden');
+  if(n===3){ render(); }
+}
+function render(){
+  document.getElementById('q').innerHTML = `<p><b>${i+1}/${questions.length}</b> ${questions[i]}</p>`;
+  document.getElementById('a').value = answers[i]||"";
+}
+function next(){
+  answers[i] = document.getElementById('a').value;
+  if(i < questions.length-1){ i++; render(); }
+  else{ go(4); console.log(answers); }
+}
+</script>
+</body>
+</html>
